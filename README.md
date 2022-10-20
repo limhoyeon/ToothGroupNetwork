@@ -9,7 +9,7 @@
   - FinalModel: another for Final Test phase - algorithm name "final_v1"
 - All of the checkpoint files for each model are included in this repo.
 - The processing speed is not fast because the code has not been optimized yet.
-- The processing speed of FinalModel is slow due to the use of ensamble method to increase performance. It is not clear whether this ensamble method actually increase accuracy.
+- The processing speed of FinalModel is slow due to the use of ensamble method to increase performance. It is not clear whether this ensamble method actually increases accuracy.
 - How to inference with TestModel
 ```
 python inference_mid.py --input_path /your/input/path --save_path /your/save/path
