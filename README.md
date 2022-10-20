@@ -18,7 +18,7 @@ python inference_mid.py --input_path /your/input/path --save_path /your/save/pat
 ```
 python inference_final.py --input_path /your/input/path --save_path /your/save/path
 ```
-- Inference use codes in predict.py which is provided by challenge organizers. If you want to understand inference processing more, please refer to predict_utils.py in this repo.
+- you can also inference with process_final.py and process_mid.py. It is same as process.py which was used for submission on grand challange platform.   
 - The data structure for input is the same as the data provided during challenge (obj).
 ```
 --input_path
