@@ -1,7 +1,7 @@
 # ToothGroupNetwork
 - Team CGIP
 - Ho Yeon Lim and Min Chang Kim 
-- If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick answer.
+- If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick reply.
 
 # Inference
 - We offer two model
