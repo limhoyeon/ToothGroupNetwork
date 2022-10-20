@@ -5,6 +5,13 @@ __pycache__/
 
 # C extensions
 *.so
+# personal(data)
+bdl_cache/
+datasets/
+output_path/
+example_data/
+wandb/
+*.h5
 
 # Distribution / packaging
 .Python
