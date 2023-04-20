@@ -51,7 +51,8 @@ and so on...
 
 
 # How To Train Model
-- if you want to train our model, please contact me
+- if you want to train our model, please contact me.
+- The training code will be updated and released during May.
 
 # installation
 - Installtion is tested on pytorch/pytorch:1.7.1-cuda11.0-cudnn8-devel(ubuntu, pytorch 1.7.1)
