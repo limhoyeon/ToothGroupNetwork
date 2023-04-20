@@ -9,13 +9,14 @@
 - We used the dataset shared in the challenge, and since it is not our own data, it is not possible to share it.
 - Thank you for pressing the star!
 - If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick reply.
+- trained checkpoints cannot be shared because of data copyright issue, so you have to train your model with your data. If you want test with our trained model, please request access in Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge again. I'm sorry for the inconvenience.
 
 
 # Inference
 - We offer two model
   - TestModel: one for Preliminary Test phase - algorithm name "0726_bdl_v6"
   - FinalModel: another for Final Test phase - algorithm name "final_v1"
-- All of the checkpoint files for each model are in (https://drive.google.com/drive/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby?usp=sharing). Download ckpts.zip and unzip all of checkpoints in ckpts folder.(*ckpts cannot be shared because of data copyright issue, you have to train your model with your data)
+- All of the checkpoint files for each model are in (https://drive.google.com/drive/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby?usp=sharing). Download ckpts.zip and unzip all of checkpoints in ckpts folder.(*ckpts cannot be shared because of data copyright issue, please check notice
 - The processing speed is not fast because the code has not been optimized yet.
 - The processing speed of FinalModel is slow due to the use of ensamble method to increase performance. It is not clear whether this ensamble method actually increases accuracy.
 - How to inference with TestModel
