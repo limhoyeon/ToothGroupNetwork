@@ -1,14 +1,15 @@
+# ToothGroupNetwork
+- Team CGIP
+- Ho Yeon Lim and Min Chang Kim 
+
 # Notice
 - This repository contains the code for the tooth segmentation algorithm that won first place at [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge
 ](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/)
 - We plan to publish a paper in May 2023 and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
 - We used the dataset shared in the challenge, and since it is not our own data, it is not possible to share it.
 - Thank you for pressing the star!
-
-# ToothGroupNetwork
-- Team CGIP
-- Ho Yeon Lim and Min Chang Kim 
 - If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick reply.
+
 
 # Inference
 - We offer two model
