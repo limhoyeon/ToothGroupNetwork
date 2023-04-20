@@ -16,7 +16,7 @@
 - We offer two model
   - TestModel: one for Preliminary Test phase - algorithm name "0726_bdl_v6"
   - FinalModel: another for Final Test phase - algorithm name "final_v1"
-- All of the checkpoint files for each model are in (https://drive.google.com/drive/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby?usp=sharing). Download ckpts.zip and unzip all of checkpoints in ckpts folder.(*ckpts cannot be shared because of data copyright issue, please check notice
+- All of the checkpoint files for each model are in (https://drive.google.com/drive/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby?usp=sharing). Download ckpts.zip and unzip all of checkpoints in ckpts folder.(*ckpts cannot be shared now, because of data copyright issue, please check notice.)
 - The processing speed is not fast because the code has not been optimized yet.
 - The processing speed of FinalModel is slow due to the use of ensamble method to increase performance. It is not clear whether this ensamble method actually increases accuracy.
 - How to inference with TestModel
