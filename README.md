@@ -3,6 +3,7 @@
 ](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/)
 - We plan to publish a paper in May 2023 and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
 - We used the dataset shared in the challenge, and since it is not our own data, it is not possible to share it.
+- Thank you for pressing the star!
 
 # ToothGroupNetwork
 - Team CGIP
@@ -70,3 +71,8 @@ pip install trimesh
 pip install easydict
 cd external_libs/pointops && python setup.py install
 ```
+
+# Reference codes
+- https://github.com/LiyaoTang/contrastBoundary.git
+- https://github.com/yanx27/Pointnet_Pointnet2_pytorch
+- https://github.com/POSTECH-CVLab/point-transformer.git
