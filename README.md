@@ -9,7 +9,7 @@
 - We plan to publish a paper in May 2023 and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
 - We used the dataset shared in the challenge, and since it is not our own data, it is not possible to share it.
 - If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick reply.
-- trained checkpoints cannot be shared because of data copyright issue, so you have to train your model with your data. If you want test your data with our trained model, please request access in [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/) again. You can test your data with our trained models by requesting access in grand challenge platform. I'm sorry for the inconvenience. I'll try to find a way to share checkpoints.
+- trained checkpoints cannot be shared because of data copyright issue, so you have to train your model with your data. If you want test your data with our trained model, please request access in [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/) again. You can test your data with our trained models by requesting access in grand challenge platform. I'm sorry for the inconvenience. I'll try to find a way to share checkpoints. If your request has been rejected, please email hoyeon351@gmail.com. I will accept request quickly.
 
 
 
