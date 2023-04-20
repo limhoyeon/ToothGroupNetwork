@@ -1,3 +1,7 @@
+# Notice
+- This repository contains the code for the tooth segmentation algorithm that won first place at [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge
+](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/)
+- We plan to publish a paper in May and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
 # ToothGroupNetwork
 - Team CGIP
 - Ho Yeon Lim and Min Chang Kim 
@@ -18,8 +22,9 @@ python inference_mid.py --input_path /your/input/path --save_path /your/save/pat
 ```
 python inference_final.py --input_path /your/input/path --save_path /your/save/path
 ```
-- you can also inference with process_final.py and process_mid.py. It is same as process.py which was used for submission on grand challange platform.   
+- You can also inference with process_final.py and process_mid.py. It is same as process.py which was used for submission on grand challange platform.   
 - The data structure for input is the same as the data provided during challenge (obj).
+- You need to adhere to the data name format(casename_upper.obj or casename_lower.obj).
 ```
 --input_path
 ----00OMSZGW
@@ -39,6 +44,9 @@ and so on..
 ----0EAKT1CU_upper.json
 and so on...
 ```
+- All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction.
+![image](https://user-images.githubusercontent.com/70117866/233266358-1f7139ff-3921-44d8-b5bf-1461645de2b3.png)
+
 - results are same as challenge json format which have "jaw", "instances" and "labels" as keys.
 
 
