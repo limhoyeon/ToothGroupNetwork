@@ -1,7 +1,7 @@
 # Notice
 - This repository contains the code for the tooth segmentation algorithm that won first place at [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge
 ](https://3dteethseg.grand-challenge.org/evaluation/final-test-3d-teeth-segmentation-and-labeling/leaderboard/)
-- We plan to publish a paper in May and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
+- We plan to publish a paper in May 2023 and will release additional training code and other networks (such as Tsegnet) used in the experiments accordingly.
 # ToothGroupNetwork
 - Team CGIP
 - Ho Yeon Lim and Min Chang Kim 
@@ -52,7 +52,7 @@ and so on...
 
 # How To Train Model
 - if you want to train our model, please contact me.
-- The training code will be updated and released during May.
+- The training code will be updated and released during May 2023.
 
 # installation
 - Installtion is tested on pytorch/pytorch:1.7.1-cuda11.0-cudnn8-devel(ubuntu, pytorch 1.7.1)
