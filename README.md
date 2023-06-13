@@ -50,7 +50,7 @@ and so on..
 ----0EAKT1CU_upper.json
 and so on...
 ```
-- All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction.
+- All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction(plz note that both lower jaw and upper jaw have same z direction!)
 ![image](https://user-images.githubusercontent.com/70117866/233266358-1f7139ff-3921-44d8-b5bf-1461645de2b3.png)
 
 - results are same as challenge json format which have "jaw", "instances" and "labels" as keys.
