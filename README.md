@@ -14,6 +14,7 @@
 
 # Data
 - We used the dataset shared in [the challenge git repository](https://github.com/abenhamadou/3DTeethSeg22_challenge). For more information about the data, check out the link.
+- You can also download the challenge training split data in [google drive](https://drive.google.com/drive/u/1/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby)(our codes are based on this data).
 - Data consists of dental mesh obj files and corresponding ground truth json files.
 - You need to adhere to the data name format(casename_upper.obj or casename_lower.obj).
 - The directory structure of your data should look like below..
@@ -39,7 +40,7 @@ and so on..
 - All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction(plz note that both lower jaw and upper jaw have the same z-direction!)
 ![image](https://user-images.githubusercontent.com/70117866/233266358-1f7139ff-3921-44d8-b5bf-1461645de2b3.png)
 
-# Train
+# Training
 ## Preprocessing
 - 먼저, 빠른 학습을 위해 preprocess_data.py를 실행하여 mesh(.obj)의 vertex들을 farthest sampling한 결과를 저장합니다.
 - 실행방법 예시는 아래와 같습니다.
@@ -127,12 +128,14 @@ start_train.py \
 
 
 # Inference
+- 챌린지에 사용된 모델의 성능을 테스트하시려면, challenge_branch로 이동해주세요(상단 notice 참조).
+- 
 - We offer two model
   - TestModel: one for Preliminary Test phase - algorithm name "0726_bdl_v6"
   - FinalModel: another for Final Test phase - algorithm name "final_v1"
 - All of the checkpoint files for each model are in (https://drive.google.com/drive/folders/15oP0CZM_O_-Bir18VbSM8wRUEzoyLXby?usp=sharing). Download ckpts.zip and unzip all of checkpoints in ckpts folder.
 - The processing speed is not fast because the code has not been optimized yet.
-- The processing speed of FinalModel is slow due to the use of ensamble method to increase performance. It is not clear whether this ensamble method actually increases accuracy.
+- The processing speed of FinalModel is slow due to the use of the ensemble method to increase performance. It is not clear whether this ensemble method actually increases accuracy.
 - How to inference with TestModel
 ```
 python inference_mid.py --input_path /your/input/path --save_path /your/save/path
