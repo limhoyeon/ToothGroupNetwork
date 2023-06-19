@@ -39,7 +39,7 @@ and so on..
 - All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction(plz note that both lower jaw and upper jaw have the same z-direction!)
 ![image](https://user-images.githubusercontent.com/70117866/233266358-1f7139ff-3921-44d8-b5bf-1461645de2b3.png)
 
-# Training
+# Train
 ## Preprocessing
 - 먼저, 빠른 학습을 위해 preprocess_data.py를 실행하여 mesh(.obj)의 vertex들을 farthest sampling한 결과를 저장합니다.
 - 실행방법 예시는 아래와 같습니다.
@@ -83,10 +83,47 @@ start_train.py \
  --val_data_split_txt_path "base_name_val_fold.txt"
 ```
 
-### TSegNet
-- [TSegNet](https://enigma-li.github.io/projects/tsegNet/TSegNet.html)을 구현한 모델입니다.
+### 2. tsegnet
+- [TSegNet](https://enigma-li.github.io/projects/tsegNet/TSegNet.html)을 구현한 모델입니다. 자세한 구조는 논문 참고해주세요.
+- tsegnet은 먼저 centroid prediction module을 학습해야 합니다. 먼저, train_configs/tsegnet.py에서 run_tooth_seg_mentation_module 파라미터를 False로 바꿔주세요.
 
-### pointnet
+![image](https://github.com/limhoyeon/ToothGroupNetwork/assets/70117866/c37eb2ac-b36d-4ca9-a014-b785fd556c35)
+- 그리고, 아래와 같은 명령어를 입력하여 centroid prediction module을 학습해주세요.
+```
+start_train.py \
+ --model_name "tsegnet" \
+ --config_path "train_configs/tsegnet.py" \
+ --experiment_name "your_experiment_name" \
+ --input_data_dir_path "path/to/save/preprocessed_data" \
+ --train_data_split_txt_path "base_name_train_fold.txt" \
+ --val_data_split_txt_path "base_name_val_fold.txt"
+```
+- centroid prediction module 학습이 완료되면, train_configs/tsegnet.py에서 pretrained_centroid_model_path를 학습한 centroid prediction module의 checkpoint path로 바꿔주시고, run_tooth_segmentation_module을 True로 바꿔주세요!
+- 그리고, 아래와 같은 명령어를 입력하여 tsegnet 모델을 학습해주세요.
+```
+start_train.py \
+ --model_name "tsegnet" \
+ --config_path "train_configs/tsegnet.py" \
+ --experiment_name "your_experiment_name" \
+ --input_data_dir_path "path/to/save/preprocessed_data" \
+ --train_data_split_txt_path "base_name_train_fold.txt" \
+ --val_data_split_txt_path "base_name_val_fold.txt"
+```
+
+
+### 3. pointnet | pointnetpp | dgcnn | pointtransformer
+- [pointnet](https://arxiv.org/abs/1612.00593) | [pointnet++](http://stanford.edu/~rqi/pointnet2/) | [dgcnn](https://liuziwei7.github.io/projects/DGCNN) | [pointtransformer](https://arxiv.org/abs/2012.09164)
+- point cloud segmentation method를 바로 tooth segmentation에 적용한 모델입니다.
+- 아래와 같은 명령어로 학습을 시작할 수 있습니다.
+```
+start_train.py \
+ --model_name "pointnet" \
+ --config_path "train_configs/pointnet.py" \
+ --experiment_name "your_experiment_name" \
+ --input_data_dir_path "path/to/save/preprocessed_data" \
+ --train_data_split_txt_path "base_name_train_fold.txt" \
+ --val_data_split_txt_path "base_name_val_fold.txt"
+```
 
 
 # Inference
