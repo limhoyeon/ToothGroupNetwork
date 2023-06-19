@@ -3,7 +3,7 @@
 - Ho Yeon Lim and Min Chang Kim 
 
 # Notice
-- Writing is in progress... It should be done soon and we will commit the training code as well.
+- Writing is in progress(This document will be translated into english...). It should be done soon and we will commit the training code as well.
 - Please press the star!
 - This repository contains the code for the tooth segmentation algorithm that won first place at [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge
 ](https://3dteethseg.grand-challenge.org/evaluation/challenge/leaderboard/)
