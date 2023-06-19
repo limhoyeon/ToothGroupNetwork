@@ -3,14 +3,43 @@
 - Ho Yeon Lim and Min Chang Kim 
 
 # Notice
-- Please press the star..!!
+- Please press the star!
 - This repository contains the code for the tooth segmentation algorithm that won first place at [Miccai2022 3D Teeth Scan Segmentation and Labeling Challenge
 ](https://3dteethseg.grand-challenge.org/evaluation/challenge/leaderboard/)
-- Offical Paper for Challenge: [3DTeethSeg'22: 3D Teeth Scan Segmentation and Labeling Challenge](https://arxiv.org/abs/2305.18277)
-- We used the dataset shared in the challenge, and since it is not our own data, it is not possible to share it. Plz contact challenge organizers or challenge website.
-- If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr) or slack anytime. I'll give you a quick reply.
-- We are sharing trained checkpoints submitted in challenge.
+- Official Paper for Challenge: [3DTeethSeg'22: 3D Teeth Scan Segmentation and Labeling Challenge](https://arxiv.org/abs/2305.18277)
+- We used the dataset shared in [the challenge git repository](https://github.com/abenhamadou/3DTeethSeg22_challenge)
+- If you only want the inference code, or if you want to use the same checkpoints that we used in the challenge, you can jump to [challenge_branch](https://github.com/limhoyeon/ToothGroupNetwork/tree/challenge_branch) in this repository.
+- If you have any problem with execution, please contact me via email(hoyeon351@cglab.snu.ac.kr). I'll give you a quick reply.
 
+# Data
+- We used the dataset shared in [the challenge git repository](https://github.com/abenhamadou/3DTeethSeg22_challenge).
+- Data 
+- You need to adhere to the data name format(casename_upper.obj or casename_lower.obj).
+- The directory structure of your data should look like below..
+```
+--data_obj_parent_directory
+----00OMSZGW
+------00OMSZGW_lower.obj
+------00OMSZGW_upper.obj
+----0EAKT1CU
+------0EAKT1CU_lower.obj
+------0EAKT1CU_upper.obj.
+and so on..
+
+--data_obj_parent_directory
+----00OMSZGW
+------00OMSZGW_lower.obj
+------00OMSZGW_upper.obj
+----0EAKT1CU
+------0EAKT1CU_lower.obj
+------0EAKT1CU_upper.obj.
+
+```
+- All axes must be aligned as shown in the figure below. Note that the Y-axis points towards the back direction(plz note that both lower jaw and upper jaw have same z direction!)
+![image](https://user-images.githubusercontent.com/70117866/233266358-1f7139ff-3921-44d8-b5bf-1461645de2b3.png)
+
+# Training
+ 
 
 
 # Inference
