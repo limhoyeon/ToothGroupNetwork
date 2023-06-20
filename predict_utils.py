@@ -1,12 +1,8 @@
 import glob
 import json
 import os
-import sys
-sys.path.append("testmodel")
-import trimesh
 import numpy as np
 import traceback
-from inference_pipeline_mid import InferencePipeLine
 
 
 class NpEncoder(json.JSONEncoder):

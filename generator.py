@@ -8,20 +8,25 @@ import copy
 import augmentator as aug
 
 class DentalModelGenerator(Dataset):
-    def __init__(self, data_dir=None, aug_obj_str=None):
+    def __init__(self, data_dir=None, split_with_txt_path=None, aug_obj_str=None):
         self.data_dir = data_dir
-
-        if "txt" in os.path.basename(data_dir):
-            self.mesh_paths = []
-            f = open(data_dir, 'r')
+        self.mesh_paths = glob(os.path.join(data_dir,"*_sampled_points.npy"))
+        
+        if split_with_txt_path:
+            self.split_base_name_ls = []
+            f = open(split_with_txt_path, 'r')
             while True:
                 line = f.readline()
                 if not line: break
-                self.mesh_paths.append(line)
+                self.split_base_name_ls.append(line.strip())
             f.close()
-        else: 
-            #self.mesh_paths = glob(os.path.join(data_dir,"*"))
-            self.mesh_paths = glob(os.path.join(data_dir,"*_mesh.npy"))
+
+            temp_ls = []
+            for i in range(len(self.mesh_paths)):
+                p_id = os.path.basename(self.mesh_paths[i]).split("_")[0]
+                if p_id in self.split_base_name_ls:
+                    temp_ls.append(self.mesh_paths[i])
+            self.mesh_paths = temp_ls
 
         if aug_obj_str is not None:
             self.aug_obj = eval(aug_obj_str)
@@ -43,11 +48,13 @@ class DentalModelGenerator(Dataset):
         
         if self.aug_obj:
             self.aug_obj.reload_vals()
+            """
             if aug.Flip == type(self.aug_obj.augmentation_list[0]) and \
                self.aug_obj.augmentation_list[0].do_aug:
                     seg_label[seg_label>=8] = seg_label[seg_label>=8] - 805
                     seg_label[seg_label>=0] = seg_label[seg_label>=0] + 8
                     seg_label[seg_label<-500] = seg_label[seg_label<-500] + 805 - 8 
+            """
             low_feat = self.aug_obj.run(low_feat)
 
         low_feat = torch.from_numpy(low_feat)

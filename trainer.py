@@ -1,6 +1,7 @@
 import torch
 import wandb
-from loss_meter import LossMeter 
+from loss_meter import LossMeter
+from math import inf
 class Trainer:
     def __init__(self, config = None, model=None, gen_set=None):
         self.gen_set = gen_set
@@ -20,7 +21,7 @@ class Trainer:
             config=self.config,
             )
 
-        self.best_val_loss = 10000000
+        self.best_val_loss = inf
 
     def train(self, epoch, data_loader):
         total_loss_meter = LossMeter()
@@ -28,6 +29,7 @@ class Trainer:
         pre_step = self.step_count
         for batch_idx, batch_item in enumerate(data_loader):
             loss = self.model.step(batch_idx, batch_item, "train")
+            torch.cuda.empty_cache()
             total_loss_meter.aggr(loss.get_loss_dict_for_print("train"))
             step_loss_meter.aggr(loss.get_loss_dict_for_print("step"))
             print(loss.get_loss_dict_for_print("step"))

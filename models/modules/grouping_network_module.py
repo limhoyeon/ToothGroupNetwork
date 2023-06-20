@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-import tsg_utils as tu
+import ops_utils as ou
 import gen_utils as gu
 from .cbl_point_transformer.cbl_point_transformer_module import get_model
 
@@ -62,19 +62,19 @@ class GroupingNetworkModule(torch.nn.Module):
                 b_points_coords = gu.torch_to_numpy(inputs[b_idx][b_idx,:3,:]).T
                 b_moved_points = b_points_coords + whole_offset_1
                 b_fg_moved_points = b_moved_points[whole_cls_1.reshape(-1)!=0, :]
-                fg_points_labels_ls = tu.get_clustering_labels(b_moved_points, whole_cls_1)
+                fg_points_labels_ls = ou.get_clustering_labels(b_moved_points, whole_cls_1)
                 temp_centroids = []
                 for i in np.unique(fg_points_labels_ls):
                     temp_centroids.append(np.mean(b_fg_moved_points[fg_points_labels_ls==i, :],axis=0))
                 cluster_centroids.append(temp_centroids)
         
         org_xyz_cpu = gu.torch_to_numpy(inputs[0][:, :3, :].permute(0, 2, 1))
-        nn_crop_indexes = tu.get_nearest_neighbor_idx(org_xyz_cpu, cluster_centroids, self.config["model_parameter"]["crop_sample_size"])
-        cropped_feature_ls = tu.get_indexed_features(inputs[0], nn_crop_indexes)
+        nn_crop_indexes = ou.get_nearest_neighbor_idx(org_xyz_cpu, cluster_centroids, self.config["model_parameter"]["crop_sample_size"])
+        cropped_feature_ls = ou.get_indexed_features(inputs[0], nn_crop_indexes)
         if len(inputs)>=2:
-            cluster_gt_seg_label = tu.get_indexed_features(inputs[1], nn_crop_indexes)
+            cluster_gt_seg_label = ou.get_indexed_features(inputs[1], nn_crop_indexes)
 
-        cropped_feature_ls = tu.centering_object(cropped_feature_ls)
+        cropped_feature_ls = ou.centering_object(cropped_feature_ls)
 
         if len(inputs) >= 2 and not test:
             cluster_gt_seg_label[cluster_gt_seg_label>=0] = 0

@@ -104,19 +104,6 @@ class PointTransformerSeg(nn.Module):
         p0 = pxo[:,:,:3].reshape(-1, 3).contiguous()
         o0 = torch.arange(1, B+1, dtype=torch.int).cuda()
         o0 *= N
-        
-        """
-        pxo = inputs['points'], inputs['features'], inputs['offset']
-        p0, x0, o0 = pxo[:3]  # (n, 3), (n, c), (b) - c = in_feature_dims
-        if self.c == 3:
-            x0 = p0
-        elif self.c == 6:
-            x0 = torch.cat((p0, x0), 1)
-        elif self.c == 7:
-            x0 = torch.cat((torch.ones_like(p0[..., :1]), p0, x0), 1)
-        else:
-            raise
-        """
 
         stage_list = {'inputs': inputs}
 
@@ -204,7 +191,6 @@ class PointTransformerSeg(nn.Module):
                 offset_results, _ = self.offset_head(stage_list)
             else:
                 offset_results = None
-            #mask_results, _ = self.mask_head(stage_list)
         else:
             cls_results = self.cls(x1)
             offset_results = self.offset(x1)
@@ -222,12 +208,10 @@ class PointTransformerSeg(nn.Module):
             offset_results = offset_results.view(B, N, 3).permute(0,2,1)
         else:
             offset_results = None
-        #mask_results = mask_results.view(B, N, 2).permute(0,2,1)
-        #x1 = x1.view(B , N, x1.shape[1]).permute(0,2,1)
         output.append(cls_results)
         output.append(offset_results)
-        output.append(None) #output.append(mask_results)
-        output.append(None) #output.append(None)
+        output.append(None)
+        output.append(x1)
         
         return output
 
@@ -240,6 +224,7 @@ def get_model(**kwargs):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     cfg = config.load_cfg_from_cfg_file(os.path.join(dir_path, "default.yaml"))
     cfg = CfgNode(cfg, default='')
+    cfg["base_fdim"] = 32
     cfg["planes"] = kwargs["planes"]
     cfg["nstride"] = kwargs["stride"]
     cfg["nsample"] = kwargs["nsample"]

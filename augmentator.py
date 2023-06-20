@@ -3,24 +3,7 @@ import torch
 import numpy as np
 import gen_utils as gu
 from sklearn.decomposition import PCA
-
-class Flip:
-    def __init__(self):
-        self.do_aug = np.random.rand()>0.5
-
-    def augment(self, mesh_arr):
-        if self.do_aug:
-            mesh_arr[:,0] = -mesh_arr[:,0]
-            mesh_arr[:,3] = -mesh_arr[:,3]
-        return mesh_arr
-
-    def reload_val(self):
-        rand_num = np.random.rand()
-        self.do_aug = rand_num>0.5
-        return
-        
 class Augmentator:
-    #(16000,3) 상태로 시작하기
     def __init__(self, augmentation_list):
         self.augmentation_list = augmentation_list
     
@@ -54,7 +37,6 @@ class Rotation:
         assert self.angle_range[1] > self.angle_range[0]
 
     def augment(self, vert_arr):
-        #mean_point = np.mean(vert_arr[:,:3], axis=0).reshape(1,3)
         if self.angle_axis == "pca":
             pca_axis = PCA(n_components=3).fit(vert_arr[:,:3]).components_
             rotation_mat = pca_axis
@@ -64,12 +46,9 @@ class Rotation:
             pca_axis[2] *= flap_rand[2]
         else:
             rotation_mat = gu.axis_rotation(self.angle_axis_val, self.rot_val)
-        #vert_arr: sampled_number, 3
-        #vert_arr[:,:3] -= mean_point
         if type(vert_arr) == torch.Tensor:
             rotation_mat = torch.from_numpy(rotation_mat).type(torch.float32).cuda()
         vert_arr[:,:3] = (rotation_mat @ vert_arr[:,:3].T).T
-        #vert_arr[:,:3] += mean_point
         if vert_arr.shape[1]==6:
             vert_arr[:,3:] = (rotation_mat @ vert_arr[:,3:].T).T
         return vert_arr

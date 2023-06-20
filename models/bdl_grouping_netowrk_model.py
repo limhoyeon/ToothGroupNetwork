@@ -1,9 +1,8 @@
 import torch
 import numpy as np
-from . import train_loss
-import tsg_utils as tu
+from . import tgn_loss
+import ops_utils as ou
 import gen_utils as gu
-from .modules.cbl_point_transformer.cbl_point_transformer_module import get_model
 from models.base_model import BaseModel
 from sklearn.neighbors import KDTree
 from loss_meter import LossMap
@@ -40,17 +39,18 @@ class BdlGroupingNetworkModel(BaseModel):
         half_seg_label[half_seg_label>=9] -= 8
 
         gt_seg_label_2[gt_seg_label_2>=0] = 0
-        tooth_class_loss_2 = train_loss.tooth_class_loss(sem_2, gt_seg_label_2)
+        tooth_class_loss_1 = tgn_loss.tooth_class_loss(sem_1, half_seg_label,9)
+        tooth_class_loss_2 = tgn_loss.tooth_class_loss(sem_2, gt_seg_label_2,2)
 
-        offset_1_loss, offset_1_dir_loss = train_loss.batch_center_offset_loss(offset_1, input_coords, gt_seg_label_1)
+        offset_1_loss, offset_1_dir_loss = tgn_loss.batch_center_offset_loss(offset_1, input_coords, gt_seg_label_1)
         
-        chamf_1_loss = train_loss.batch_chamfer_distance_loss(offset_1, input_coords, gt_seg_label_1)
+        chamf_1_loss = tgn_loss.batch_chamfer_distance_loss(offset_1, input_coords, gt_seg_label_1)
         return {
-            #"tooth_class_loss_1": (tooth_class_loss_1, 1),
-            "tooth_class_loss_2": (tooth_class_loss_2, 1),
-            "offset_1_loss": (offset_1_loss, 0.03),
-            "offset_1_dir_loss": (offset_1_dir_loss, 0.03),
-            "chamf_1_loss" : (chamf_1_loss, 0.15)
+            "tooth_class_loss_1": (tooth_class_loss_1, self.config["tr_set"]["loss"]["tooth_class_loss_1"]),
+            "tooth_class_loss_2": (tooth_class_loss_2, self.config["tr_set"]["loss"]["tooth_class_loss_2"]),
+            "offset_1_loss": (offset_1_loss, self.config["tr_set"]["loss"]["offset_1_loss"]),
+            "offset_1_dir_loss": (offset_1_dir_loss, self.config["tr_set"]["loss"]["offset_1_dir_loss"]),
+            "chamf_1_loss" : (chamf_1_loss, self.config["tr_set"]["loss"]["chamf_1_loss"])
         }
 
     def get_points_cluster_labels(self, batch_item):
@@ -96,7 +96,7 @@ class BdlGroupingNetworkModel(BaseModel):
         for b_idx in range(1):
             num_of_clusters.append(len(np.unique(gt_seg_label[b_idx,:]))-1)
 
-        cluster_centroids, cluster_centroids_labels, fg_points_labels_ls = tu.clustering_points(
+        cluster_centroids, cluster_centroids_labels, fg_points_labels_ls = ou.clustering_points(
             [fg_moved_points], 
             method="kmeans", 
             num_of_clusters=num_of_clusters
@@ -116,7 +116,6 @@ class BdlGroupingNetworkModel(BaseModel):
     def load_mesh(self, base_name):
         loaded_json = gu.load_json(self.json_path_map[base_name])
         labels = np.array(loaded_json['labels']).reshape(-1,1)
-        #하악
         if loaded_json['jaw'] == 'lower':
             labels -= 20
         labels[labels//10==1] %= 10
@@ -138,7 +137,7 @@ class BdlGroupingNetworkModel(BaseModel):
 
         if not os.path.exists(cache_path):
             org_feat_cpu, org_gt_seg_label = self.load_mesh(base_name)
-            if(org_feat_cpu.shape[0] < 24000):
+            if(org_feat_cpu.shape[0] < self.config["boundary_sampling_info"]["num_of_all_points"]):
                 return batch_item["feat"], batch_item["gt_seg_label"]
             results = self.get_points_cluster_labels(batch_item) # N
             points_labels = results["ins"]["full_ins_labeled_points"][:,3]
@@ -195,6 +194,7 @@ class BdlGroupingNetworkModel(BaseModel):
 
     def step(self, batch_idx, batch_item, phase):
         self._set_model(phase)
+
         points, seg_label = self.get_boundary_sampled_points(batch_item)
 
         points = points.cuda()
@@ -203,10 +203,10 @@ class BdlGroupingNetworkModel(BaseModel):
         seg_label = seg_label.cuda()
         
         if phase == "train":
-            output = self.model([points, seg_label])
+            output = self.module([points, seg_label])
         else:
             with torch.no_grad():
-                output = self.model([points, seg_label])
+                output = self.module([points, seg_label])
         loss_meter = LossMap()
         
         loss_meter.add_loss_by_dict(self.get_loss(
@@ -224,11 +224,14 @@ class BdlGroupingNetworkModel(BaseModel):
         )
         
         if phase == "train":
-            loss_meter.add_loss("cbl_loss_1", output["cbl_loss_1"].sum(), 1)
-            loss_meter.add_loss("cbl_loss_2", output["cbl_loss_2"].sum(), 1)
+            loss_meter.add_loss("cbl_loss_1", output["cbl_loss_1"].sum(), self.config["tr_set"]["loss"]["cbl_loss_1"])
+            loss_meter.add_loss("cbl_loss_2", output["cbl_loss_2"].sum(), self.config["tr_set"]["loss"]["cbl_loss_2"])
             loss_sum = loss_meter.get_sum()
             self.optimizer.zero_grad()
             loss_sum.backward()
             self.optimizer.step()
 
         return loss_meter
+
+    def infer(self, batch_idx, batch_item, **options):
+        pass

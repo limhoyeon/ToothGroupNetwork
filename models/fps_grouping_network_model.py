@@ -1,11 +1,6 @@
 import torch
-import numpy as np
-from . import train_loss
-import tsg_utils as tu
-import gen_utils as gu
-from .modules.cbl_point_transformer.cbl_point_transformer_module import get_model
+from . import tgn_loss
 from models.base_model import BaseModel
-from sklearn.neighbors import KDTree
 from loss_meter import LossMap
 
 class FpsGroupingNetworkModel(BaseModel):
@@ -14,18 +9,18 @@ class FpsGroupingNetworkModel(BaseModel):
         half_seg_label[half_seg_label>=9] -= 8
 
         gt_seg_label_2[gt_seg_label_2>=0] = 0
-        tooth_class_loss_1 = train_loss.tooth_class_loss(sem_1, half_seg_label)
-        tooth_class_loss_2 = train_loss.tooth_class_loss(sem_2, gt_seg_label_2)
+        tooth_class_loss_1 = tgn_loss.tooth_class_loss(sem_1, half_seg_label, 9)
+        tooth_class_loss_2 = tgn_loss.tooth_class_loss(sem_2, gt_seg_label_2, 2)
 
-        offset_1_loss, offset_1_dir_loss = train_loss.batch_center_offset_loss(offset_1, input_coords, gt_seg_label_1)
+        offset_1_loss, offset_1_dir_loss = tgn_loss.batch_center_offset_loss(offset_1, input_coords, gt_seg_label_1)
         
-        chamf_1_loss = train_loss.batch_chamfer_distance_loss(offset_1, input_coords, gt_seg_label_1)
+        chamf_1_loss = tgn_loss.batch_chamfer_distance_loss(offset_1, input_coords, gt_seg_label_1)
         return {
-            "tooth_class_loss_1": (tooth_class_loss_1, 1),
-            "tooth_class_loss_2": (tooth_class_loss_2, 1),
-            "offset_1_loss": (offset_1_loss, 0.03),
-            "offset_1_dir_loss": (offset_1_dir_loss, 0.03),
-            "chamf_1_loss" : (chamf_1_loss, 0.15)
+            "tooth_class_loss_1": (tooth_class_loss_1, self.config["tr_set"]["loss"]["tooth_class_loss_1"]),
+            "tooth_class_loss_2": (tooth_class_loss_2, self.config["tr_set"]["loss"]["tooth_class_loss_2"]),
+            "offset_1_loss": (offset_1_loss, self.config["tr_set"]["loss"]["offset_1_loss"]),
+            "offset_1_dir_loss": (offset_1_dir_loss, self.config["tr_set"]["loss"]["offset_1_dir_loss"]),
+            "chamf_1_loss" : (chamf_1_loss, self.config["tr_set"]["loss"]["chamf_1_loss"])
         }
 
     def step(self, batch_idx, batch_item, phase):
@@ -39,10 +34,10 @@ class FpsGroupingNetworkModel(BaseModel):
         inputs = [points, seg_label]
 
         if phase == "train":
-            output = self.model(inputs)
+            output = self.module(inputs)
         else:
             with torch.no_grad():
-                output = self.model(inputs)
+                output = self.module(inputs)
         loss_meter = LossMap()
         
         loss_meter.add_loss_by_dict(self.get_loss(
@@ -60,8 +55,8 @@ class FpsGroupingNetworkModel(BaseModel):
         )
         
         if phase == "train":
-            loss_meter.add_loss("cbl_loss_1", output["cbl_loss_1"].sum(), 1)
-            loss_meter.add_loss("cbl_loss_2", output["cbl_loss_2"].sum(), 1)
+            loss_meter.add_loss("cbl_loss_1", output["cbl_loss_1"].sum(), self.config["tr_set"]["loss"]["cbl_loss_1"])
+            loss_meter.add_loss("cbl_loss_2", output["cbl_loss_2"].sum(), self.config["tr_set"]["loss"]["cbl_loss_2"])
             loss_sum = loss_meter.get_sum()
             self.optimizer.zero_grad()
             loss_sum.backward()
