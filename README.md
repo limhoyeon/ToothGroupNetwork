@@ -48,12 +48,12 @@
 ## Preprocessing
 - For training, you have to execute the `preprocess_data.py` to save the farthest point sampled vertices of the mesh (.obj) files.
 - Here is an example of how to execute `preprocess_data.py`.
-```
-python preprocess.py
- --source_obj_data_path data_obj_parent_directory \
- --source_json_data_path data_json_parent_directory \
- --save_data_path path/to/save/preprocessed_data
-```
+  ```
+  python preprocess.py
+   --source_obj_data_path data_obj_parent_directory \
+   --source_json_data_path data_json_parent_directory \
+   --save_data_path path/to/save/preprocessed_data
+  ```
 
 ## Training
 - We offer six models(tsegnet | tgnet(ours) | pointnet | pointnetpp | dgcnn | pointtransformer).
