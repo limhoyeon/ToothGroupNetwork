@@ -161,7 +161,7 @@ python start_inference.py \
 ----0EAKT1CU_upper.json
 and so on...
 ```
-
+- the inference config in "inference_pipelines.infenrece_pipeline_maker.py" has to be the same as the model of the train config. If you changed the train config, then you have to change the inference config.  
 # Test results
 - 링크에 제공한 train, val split으로 총 60에포크 학습하고 test split으로 확인한 결과는 아래와 같습니다.
 - IoU -> Intersection over Union(TSA in challenge) // CLS -> classification accuracy(TIR in challenge) 
