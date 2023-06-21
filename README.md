@@ -187,16 +187,16 @@
 - Installtion is tested on pytorch/pytorch:1.7.1-cuda11.0-cudnn8-devel(ubuntu, pytorch 1.7.1) docker image.
 - It can be installed on other OS(window, etc..)
 - There are some issues with RTX40XX graphic cards. plz report in issue board.
-```
-pip install wandb
-pip install --ignore-installed PyYAML
-pip install open3d
-pip install multimethod
-pip install termcolor
-pip install trimesh
-pip install easydict
-cd external_libs/pointops && python setup.py install
-```
+  ```
+  pip install wandb
+  pip install --ignore-installed PyYAML
+  pip install open3d
+  pip install multimethod
+  pip install termcolor
+  pip install trimesh
+  pip install easydict
+  cd external_libs/pointops && python setup.py install
+  ```
 
 # Reference codes
 - https://github.com/LiyaoTang/contrastBoundary.git
