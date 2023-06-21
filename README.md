@@ -153,8 +153,8 @@
    --checkpoint_path your/tgnet_fps/checkpoint/path
    --checkpoint_path_bdl your/tgnet_bdl/checkpoint/path
   ```
-- Please input the parent path of the original mesh obj files instead of the preprocessed sampling points in `--input_data_dir_path` for training. The inference process will handle the farthest point sampling internally.
-- For `split_txt_path`, provide the test split fold's casenames in the same format as used during training.
+  - Please input the parent path of the original mesh obj files instead of the preprocessed sampling points in `--input_data_dir_path` for training. The inference process will handle the farthest point sampling internally.
+  - For `split_txt_path`, provide the test split fold's casenames in the same format as used during training.
 - Predicted results are saved in save_path like below... It has the same format as the ground truth json file.
   ```
   --save_path
