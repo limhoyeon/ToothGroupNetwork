@@ -168,6 +168,7 @@
 
 # Test results
 - The checkpoints we provided were trained for 60 epochs using the train-validation split provided in the dataset drive link(`base_name_train_fold.txt`, `base_name_val_fold.txt`). The results obtained using the test split(`base_name_test_fold.txt`) are as follows.
+  
   ![image](https://github.com/limhoyeon/ToothGroupNetwork/assets/70117866/507b0a8d-e82b-4acb-849d-86388c0099d3)
   - IoU -> Intersection over Union(TSA in challenge) // CLS -> classification accuracy(TIR in challenge) 
 
