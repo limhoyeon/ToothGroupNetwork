@@ -89,7 +89,7 @@
   ```
 
 ### 2. tsegnet
-- This is the implementation of model [TSegNet](https://enigma-li.github.io/projects/tsegNet/TSegNet.html). Please refer to the paper for detailed structure information.
+- This is the implementation of model [TSegNet](https://enigma-li.github.io/projects/tsegNet/TSegNet.html). Please refer to the paper for detail.
 - First, The centroid prediction module has to be trained first in tsegnet. To train the centroid prediction module, please modify the `run_tooth_seg_mentation_module` parameter to False in the `train_configs/tsegnet.py` file.
   ![image](https://github.com/limhoyeon/ToothGroupNetwork/assets/70117866/c37eb2ac-b36d-4ca9-a014-b785fd556c35)
 - And train the centroid prediction module by entering the following command.
