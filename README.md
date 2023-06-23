@@ -183,7 +183,7 @@
 - With just a few modifications to the provided code, you can write code to test all the results.
 
 
-# installation
+# Installation
 - Installtion is tested on pytorch/pytorch:1.7.1-cuda11.0-cudnn8-devel(ubuntu, pytorch 1.7.1) docker image.
 - It can be installed on other OS(window, etc..)
 - There are some issues with RTX40XX graphic cards. plz report in issue board.
