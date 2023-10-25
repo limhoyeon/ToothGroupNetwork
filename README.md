@@ -10,6 +10,7 @@
 - If you only want the inference code, or if you want to use the same checkpoints that we used in the challenge, you can jump to [challenge_branch](https://github.com/limhoyeon/ToothGroupNetwork/tree/challenge_branch) in this repository.
 - Most of the code has been modified. It may be significantly different from the code you downloaded before June 20th. If you downloaded this repository, we recommend download it again.
 - There may be a lot of errors in the initial code. If you encounter any errors, please post them on the issue board, and we will promptly address and fix them.
+- Im sorry for the slow respond to issues because of personal reasons...
 
 # Dataset
 - We used the dataset shared in [the challenge git repository](https://github.com/abenhamadou/3DTeethSeg22_challenge). For more information about the data, check out the link.
