@@ -69,10 +69,10 @@ def get_colored_mesh(mesh, label_arr):
     ])/255
     palte[9:] *= 0.4
     label_arr = label_arr.copy()
-    label_arr %= palte.shape[0]
     label_colors = np.zeros((label_arr.shape[0], 3))
-    for idx, palte_color in enumerate(palte):
-        label_colors[label_arr==idx] = palte[idx]
+    unique_labels = np.unique(label_arr)
+    for idx, label in enumerate(unique_labels):
+        label_colors[label_arr == label] = palte[idx]
     mesh.vertex_colors = o3d.utility.Vector3dVector(label_colors)
     return mesh
 
